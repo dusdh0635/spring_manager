@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ntels.portal.dao.SampleMapper">
+	<select id="getSearchList" resultType="com.ntels.portal.domain.Manager">
+		<include refid="header"></include>
+		SELECT USER_ID, USER_NAME, USER_GROUP_ID, TEL_NO, E_MAIL
+		FROM T_USER_INFO
+		<include refid="search_use"></include>
+		<include refid="search_group"></include>
+		<include refid="search_factor"></include>
+		ORDER BY USER_ID
+		<include refid="footer"></include>
+	</select>
+
+	<select id="getManagerById" resultType="com.ntels.portal.domain.ManagerInfo">
+		SELECT *
+		FROM T_USER_INFO
+		WHERE USER_ID = #{user_id}
+	</select>
+
+	<select id="getGroupAll" resultType="String">
+		SELECT USER_GROUP_NAME
+		FROM T_USER_GROUP
+	</select>
+
+	<update id="updateManager">
+		UPDATE 	T_USER_INFO
+		SET USER_NAME= '${USER_NAME}',
+		    USER_GROUP_ID= '${USER_GROUP_ID}',
+		  	PASSWORD= '${PASSWORD}',
+		  	DEPT_NAME= '${DEPT_NAME}',
+			EMP_NO= '${EMP_NO}',
+		  	TEL_NO= '${TEL_NO}',
+		  	E_MAIL= '${E_MAIL}',
+		  	USE_YN= '${USE_YNtochar}'
+		WHERE USER_ID = '${USER_ID}'
+	</update>
+
+	<select id="getGroupById" resultType="com.ntels.portal.domain.Group">
+		SELECT USER_GROUP_NAME
+		FROM T_USER_GROUP
+		WHERE USER_GROUP_ID = #{group_id}
+	</select>
+
+	<select id="getGroupByName" resultType="com.ntels.portal.domain.Group">
+		SELECT USER_GROUP_ID
+		FROM T_USER_GROUP
+		WHERE USER_GROUP_NAME = #{group_name}
+	</select>
+
+	<insert id="insertManager">
+		INSERT INTO T_USER_INFO (USER_ID, USER_NAME, USER_GROUP_ID, PASSWORD, DEPT_NAME
+		    ,EMP_NO, TEL_NO, E_MAIL, USE_YN) VALUES ('${USER_ID}', '${USER_NAME}', '${USER_GROUP_ID}', '${PASSWORD}', '${DEPT_NAME}'
+													,'${EMP_NO}', '${TEL_NO}', '${E_MAIL}', '${USE_YNtochar}')
+	</insert>
+
+	<sql id="header">
+	SELECT G.USER_GROUP_NAME, U.* FROM(
+	</sql>
+	<sql id="footer">
+		)U, T_USER_GROUP G
+	where U.USER_GROUP_ID = G.USER_GROUP_ID
+	</sql>
+
+
+	<sql id="search_use">
+		<choose>
+			<when test="status == 0">
+				WHERE USE_YN = 'N'
+			</when>
+			<when test="status == 1">
+				WHERE USE_YN = 'Y'
+			</when>
+			<otherwise>
+				WHERE 1=1
+			</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="search_group">
+		<choose>
+			<when test="group == null">
+			</when>
+			<otherwise>
+				AND USER_GROUP_ID = #{group}
+			</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="search_factor">
+		<choose>
+			<when test="factor == null">
+			</when>
+			<otherwise>
+				AND ${factor} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
+</mapper>

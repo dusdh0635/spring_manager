@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+  
+  <definition name=".onlybody" template="/WEB-INF/views/template/onlyBody.jsp">
+    <put-attribute name="body" value="/WEB-INF/views/template/body.jsp" />
+  </definition>
+  
+  <definition name="index" extends=".onlybody">
+    <put-attribute name="body" value="/WEB-INF/views/index.jsp" />
+  </definition>
+
+  <definition name="portal/**" extends=".default">
+    <put-attribute name="body" value="/WEB-INF/views/portal/{1}.jsp" />
+  </definition>
+  	
+</tiles-definitions>

@@ -60,12 +60,12 @@ public class ManagerListController {
 		return mv;
 	}
 
-	@PostMapping(value = "")
+	@PostMapping(value = "search")
 	public ModelAndView List(SearchOption searchOption) {
 		try {
-			List<Group> tmp = groupService.groupByName(searchOption.getManagerGroup());
+			List<String> tmp = groupService.groupByName(searchOption.getManagerGroup());
 			if (!tmp.isEmpty()){
-				searchOption.setManagerGroup(tmp.get(0).getUSER_GROUP_ID());
+				searchOption.setManagerGroup(tmp.get(0));
 			}
 			else{
 				searchOption.setManagerGroup(null);
@@ -93,7 +93,7 @@ public class ManagerListController {
 		return mv;
 	}
 
-	@RequestMapping(value = "{pagenum}")
+	@GetMapping(value = "{pagenum}")
 	public ModelAndView indexList(@PathVariable String pagenum) {
 		try {
 			start = (Integer.parseInt(pagenum)-1) * 10;

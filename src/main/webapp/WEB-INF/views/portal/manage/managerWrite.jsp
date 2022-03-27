@@ -43,7 +43,7 @@
                 </span>
             </div>
 
-            <form action="/portal/manage/managerWrite/new" method="post">
+            <form action="/portal/manage/managerWrite/new" method="post" name='writeForm' id ='writeForm'>
             <!-- table_detail -->
             <table class="brd_detail">
                 <caption>Manager Write</caption>
@@ -54,8 +54,37 @@
                 <tbody>
                 <tr>
                     <th>ID</th>
-                    <td><input name="USER_ID" type="text" class="" style="width:188px;"/><span class="btn_gray mgl5"><a href="/portal/manage/managerWrite/checkId/"+${USER_ID}>Check ID</a></span></td>
+                    <td><input name="USER_ID" id = 'id' type="text" class="" style="width:188px;"/><input class="btn_gray mgl5" type='submit' id='checkBtn' value='Check ID'></td>
                 </tr>
+                <script>
+                        src="https://code.jquery.com/jquery-3.5.1.min.js"
+                </script>
+                <script>
+                    $('#checkBtn').on("click", (e) => {
+                        const id = $('#id').val();
+                        e.preventDefault()
+                        console.log('btn click')
+                        if(id.length === 0 || id === null) return alert("아이디를 입력하세요");
+
+                        $.ajax({
+                            type:'post',
+                            async:false,
+                            url:'http://localhost:8080/portal/manage/managerWrite/checkId',
+                            dataType:'text',
+                            data:{inputId:id},
+                            success: function(result) {
+                                if (result == 'true')
+                                    alert('사용 가능한 아이디 입니다');
+                                else{
+                                    alert('이미 존재하는 아이디 입니다')
+                                }
+                            },
+                            error:function () {
+                                console.log('error');
+                            }
+                        })
+                    })
+                </script>
                 <tr>
                     <th>Manager Name <img src="/images/mone/star.gif" alt=""/></th>
                     <td><input name="USER_NAME" type="text" class="" style="width:188px;"/></td>
@@ -73,11 +102,11 @@
                 </tr>
                 <tr>
                     <th>Password <img src="/images/mone/star.gif" alt=""/></th>
-                    <td><input name="PASSWORD" type="text" class="" style="width:188px;"/></td>
+                    <td><input name="PASSWORD" id='password' type="password" class="" style="width:188px;"/></td>
                 </tr>
                 <tr>
                     <th>Retype Password <img src="/images/mone/star.gif" alt=""/></th>
-                    <td><input name="PASSWORD2" type="text" class="" style="width:188px;"/></td>
+                    <td><input name="PASSWORD2" id='password2' type="password" class="" style="width:188px;"/></td>
                 </tr>
                 <tr>
                     <th>Department</th>

@@ -33,7 +33,12 @@ public class WriteService {
         }
     }
     public void insertManager(ManagerInfo managerInfo) throws Exception{
-        if (!managerInfo.getUSE_YN().equals(("Active"))){
+        if (managerInfo.getUSER_NAME().equals("")){managerInfo.setUSER_NAME("Default");}
+        if (managerInfo.getDEPT_NAME().equals("")){managerInfo.setDEPT_NAME("Default");}
+        if (managerInfo.getEMP_NO().equals("")){managerInfo.setEMP_NO("Default");}
+        if (managerInfo.getTEL_NO().equals("")){managerInfo.setTEL_NO("Default");}
+        if (managerInfo.getE_MAIL().equals("")){managerInfo.setE_MAIL("Default");}
+        if (managerInfo.getUSE_YN().equals(("Inactive"))){
             managerInfo.setUSE_YNtochar('N');
         }
         else {
@@ -43,7 +48,7 @@ public class WriteService {
     }
 
     public void updateManager(ManagerInfo managerInfo) throws Exception{
-        if (!managerInfo.getUSE_YN().equals(("Active"))){
+        if (managerInfo.getUSE_YN().equals(("Inactive"))){
             managerInfo.setUSE_YNtochar('N');
         }
         else {

@@ -38,54 +38,57 @@ public class ManagerWriterController {
         return mv;
     }
 
-    public String checkId(String inputId){
+    @PostMapping(value = "checkId")
+    @ResponseBody
+    public Boolean checkId(String inputId){
+        String message;
         try{
             checkIdfin = writeService.check(inputId);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return inputId;
+        System.out.println(checkIdfin);
+        return checkIdfin;
     }
 
     @PostMapping(value = "new")
-    public String insert(ManagerInfo managerInfo, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String insert(ManagerInfo managerInfo, HttpServletRequest request, HttpServletResponse response) {
         try{
             checkIdfin = writeService.check(managerInfo.getUSER_ID());
-            if (checkIdfin){
-                if(managerInfo.getPASSWORD().equals(managerInfo.getPASSWORD2())) {
-                    try {
-                        List<Group> tmp = groupService.groupByName(managerInfo.getUSER_GROUP_ID());
+            response.setContentType("text/html; charset=utf-8");
+            response.setCharacterEncoding("utf-8");
+            PrintWriter out = response.getWriter();
+
+            if(checkIdfin && !(managerInfo.getUSER_ID().equals(""))) {
+                if(managerInfo.getPASSWORD()!="" && managerInfo.getPASSWORD().equals(managerInfo.getPASSWORD2())) {
+                    if(!(managerInfo.getUSER_GROUP_ID().equals("ManagerGroup"))) {
+                        List<String> tmp = groupService.groupByName(managerInfo.getUSER_GROUP_ID());
                         if (!tmp.isEmpty()) {
-                            managerInfo.setUSER_GROUP_ID(tmp.get(0).getUSER_GROUP_ID());
+                            managerInfo.setUSER_GROUP_ID(tmp.get(0));
                         } else {
                             managerInfo.setUSER_GROUP_ID(null);
                         }
                         writeService.insertManager(managerInfo);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    }
+                    else {
+                        out.println("<script>alert('그룹을 설정해주세요.');history.go(-1);</script>");
+                        out.flush();
                     }
                 }
                 else{
-                    response.setContentType("text/html; charset=utf-8");
-                    response.setCharacterEncoding("utf-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<script>alert('패스워드가 일치하지 않습니다.');history.go(-1);</script>");
+                    out.println("<script>alert('패스워드가 입력되지 않았거나 일치하지 않습니다.');history.go(-1);</script>");
                     out.flush();
                 }
             }
             else {
-                response.setContentType("text/html; charset=utf-8");
-                response.setCharacterEncoding("utf-8");
-                PrintWriter out = response.getWriter();
-                out.println("<script>alert('중복 아이디 입니다.');history.go(-1);</script>");
+                out.println("<script>alert('아이디가 입력되지 않았거나 중복 아이디 입니다.');history.go(-1);</script>");
                 out.flush();
             }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-
         return "redirect:/portal/manage/managerList";
     }
 }

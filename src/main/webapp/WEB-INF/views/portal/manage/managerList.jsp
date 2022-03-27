@@ -44,7 +44,7 @@
             </div>
 
             <!-- search -->
-            <form action="/portal/manage/managerList/" method="post">
+            <form action="/portal/manage/managerList/search" method="post">
             <div class="search">
                 <strong>Manager Group</strong>
                 <select name="managerGroup" style="width:180px;">

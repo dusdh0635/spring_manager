@@ -23,6 +23,12 @@
 		FROM T_USER_GROUP
 	</select>
 
+	<select id="groupUserCount" resultType="int">
+		SELECT COUNT(*)
+		FROM T_USER_INFO
+		WHERE USER_GROUP_ID = #{group_id}
+	</select>
+
 	<update id="updateManager">
 		UPDATE 	T_USER_INFO
 		SET USER_NAME= '${USER_NAME}',
@@ -36,13 +42,13 @@
 		WHERE USER_ID = '${USER_ID}'
 	</update>
 
-	<select id="getGroupById" resultType="com.ntels.portal.domain.Group">
+	<select id="getGroupById" resultType="String">
 		SELECT USER_GROUP_NAME
 		FROM T_USER_GROUP
 		WHERE USER_GROUP_ID = #{group_id}
 	</select>
 
-	<select id="getGroupByName" resultType="com.ntels.portal.domain.Group">
+	<select id="getGroupByName" resultType="String">
 		SELECT USER_GROUP_ID
 		FROM T_USER_GROUP
 		WHERE USER_GROUP_NAME = #{group_name}

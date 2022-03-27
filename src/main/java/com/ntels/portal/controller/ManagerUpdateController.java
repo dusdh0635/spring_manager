@@ -27,12 +27,12 @@ public class ManagerUpdateController {
     List<String> group_list;
     String this_group;
 
-    @RequestMapping(value = "{id}")
+    @GetMapping(value = "{id}")
     public ModelAndView showEdit(@PathVariable String id) {
         try {
             this_manager = writeService.findManagerById(id);
             group_list =  groupService.groupAll();
-            this_group = groupService.groupById(this_manager.getUSER_GROUP_ID()).get(0).getUSER_GROUP_NAME();
+            this_group = groupService.groupById(this_manager.getUSER_GROUP_ID()).get(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,11 +44,11 @@ public class ManagerUpdateController {
         return mv;
     }
     @PostMapping(value = "edit")
-    public String edit(ManagerInfo managerInfo, Model model, HttpServletRequest request) {
+    public String edit(ManagerInfo managerInfo) {
         try{
-            List<Group> tmp = groupService.groupByName(managerInfo.getUSER_GROUP_ID());
+            List<String> tmp = groupService.groupByName(managerInfo.getUSER_GROUP_ID());
             if (!tmp.isEmpty()){
-                managerInfo.setUSER_GROUP_ID(tmp.get(0).getUSER_GROUP_ID());
+                managerInfo.setUSER_GROUP_ID(tmp.get(0));
             }
             else{
                 managerInfo.setUSER_GROUP_ID(null);
@@ -59,7 +59,6 @@ public class ManagerUpdateController {
         catch (Exception e) {
             e.printStackTrace();
         }
-        //String referer = request.getHeader("Referer");
         return "redirect:/portal/manage/managerList";
     }
 }

@@ -16,10 +16,11 @@ public class GroupService {
     public List<String> groupAll(){
         return sampleMapper.getGroupAll();
     }
-    public List<Group> groupById(String group_id){
-        return sampleMapper.getGroupById(group_id);
-    }
-    public List<Group> groupByName(String group_name){
+    public List<String> groupById(String group_id){ return sampleMapper.getGroupById(group_id);}
+    public List<String> groupByName(String group_name){
         return sampleMapper.getGroupByName(group_name);
+    }
+    public int groupCount (String group_id){
+        return sampleMapper.groupUserCount(group_id);
     }
 }

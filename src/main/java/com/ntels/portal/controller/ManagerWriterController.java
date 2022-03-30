@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/portal/manage/managerWrite")
 public class ManagerWriterController {
 

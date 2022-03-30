@@ -65,7 +65,7 @@
                     <td>
                         <select name="USER_GROUP_ID" style="width:200px;">
                             <option>${this_group}</option>
-                            <c:forEach var = "group_name" items="${group_list}">
+                            <c:forEach var = "group_name" items="${groupList}">
                                 <option>${group_name}</option>
                             </c:forEach>
                         </select>

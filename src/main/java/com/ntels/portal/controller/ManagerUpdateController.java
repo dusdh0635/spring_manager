@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/portal/manage/managerUpdate")
 public class ManagerUpdateController {
 

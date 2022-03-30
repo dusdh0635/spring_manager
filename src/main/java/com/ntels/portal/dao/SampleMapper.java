@@ -17,6 +17,7 @@ public interface SampleMapper {
 	public List<Manager> getSearchList(Map map);
 	public List<ManagerInfo> getManagerById(String user_id);
 	public List<String> getGroupAll();
+	public List<Group> getGroupList();
 	public List<String> getGroupById(String group_id);
 	public List<String> getGroupByName(String group_name);
 	public void insertManager(ManagerInfo managerInfo);

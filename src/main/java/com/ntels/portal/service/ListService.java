@@ -20,12 +20,17 @@ public class ListService {
 		int status = -1;
 		String factor = null;
 		String keyword = searchOption.getKeyword();
+		String group = searchOption.getManagerGroup();
 
 		if (searchOption.getStatus().equals("Active")) {
 			status = 1;
 		}
 		else if (searchOption.getStatus().equals("Inactive")){
 			status = 0;
+		}
+
+		if (searchOption.getManagerGroup().equals("Select Item")) {
+			group = null;
 		}
 
 		if (!keyword.equals("")) {
@@ -48,7 +53,7 @@ public class ListService {
 		map.put("status", status);
 		map.put("factor", factor);
 		map.put("keyword", keyword);
-		map.put("group", searchOption.getManagerGroup());
+		map.put("group", group);
 
 		return sampleMapper.getSearchList(map);
 	}

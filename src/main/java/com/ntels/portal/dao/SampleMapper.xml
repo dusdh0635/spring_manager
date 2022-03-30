@@ -23,6 +23,11 @@
 		FROM T_USER_GROUP
 	</select>
 
+	<select id="getGroupList" resultType="Group">
+		SELECT *
+		FROM T_USER_GROUP
+	</select>
+
 	<select id="groupUserCount" resultType="int">
 		SELECT COUNT(*)
 		FROM T_USER_INFO

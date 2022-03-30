@@ -12,7 +12,9 @@ import java.util.Optional;
 public class GroupService {
     @Autowired
     private SampleMapper sampleMapper;
-
+    public List<Group> groupList(){
+        return sampleMapper.getGroupList();
+    }
     public List<String> groupAll(){
         return sampleMapper.getGroupAll();
     }

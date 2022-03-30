@@ -10,6 +10,6 @@
 </head>
 
 <body>
-	<h1><span>Index</span></h1>
+	<h1><span>Index my server</span></h1>
 </body>
 </html>
